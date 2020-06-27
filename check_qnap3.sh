@@ -208,7 +208,7 @@ elif [ "$strpart" == "hdtemp" ]; then
 
 	for (( c=1; c<=$hdnum; c++ ))
 	do
-	   TEMPHD=$(snmpget -v2c -c "$strCommunity" -mALL "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.6.$c | awk '{print $4}')
+	   TEMPHD=$(snmpget -v2c -c "$strCommunity" "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.6.$c | awk '{print $4}')
 	   if [ ${TEMPHD} -ge "$strWarning" ]; then
 
 	        if [ ${ret} -eq 0 ]; then
@@ -216,8 +216,8 @@ elif [ "$strpart" == "hdtemp" ]; then
 	            ret=1
                 fi
 
-            ENC=$(snmpget -v2c -c "$strCommunity" -mALL "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.3.$c | awk '{print $4}')
-            ID=$(snmpget -v2c -c "$strCommunity" -mALL "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.2.$c | awk '{print $4}')
+            ENC=$(snmpget -v2c -c "$strCommunity"  "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.3.$c | awk '{print $4}')
+            ID=$(snmpget -v2c -c "$strCommunity"  "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.2.$c | awk '{print $4}')
 
             if [ ${TEMPHD} -ge "$strCritical" ]; then
                 ret=2
@@ -586,7 +586,7 @@ elif [ "$strpart" == "hdstatus" ]; then
 
 	for (( c=1; c<=$hdnum; c++ ))
 	do
-	   HD=$(snmpget -v2c -c "$strCommunity" -mALL "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.4.$c | awk '{print $4}' | sed 's/^"\(.*\).$/\1/')
+	   HD=$(snmpget -v2c -c "$strCommunity" "$strHostname" 1.3.6.1.4.1.24681.1.4.1.1.1.1.5.2.1.4.$c | awk '{print $4}' | sed 's/^"\(.*\).$/\1/')
 	   if [ ${HD^^} == "GOOD" ]; then
             	hdok=$(echo "scale=0; $hdok+1" | bc -l)
     	   elif [ "$HD" == "--" ]; then    	        
