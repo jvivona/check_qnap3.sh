@@ -539,16 +539,10 @@ elif [ "$strpart" == "vol2status" ]; then
                 WARNING=1
         fi
 
-        if [ "$VOL" -lt "$VOLCOUNT" ]; then
-           ALLOUTPUT="${ALLOUTPUT}Volume #${VOL}: $VOLSTAT, Total Size (bytes): $VOLCAPACITY $UNITtest, Free: $VOLFREESIZE $UNITtest2 (${VOLPCT}%), "
-        else
+
            ALLOUTPUT="${ALLOUTPUT}Volume #${VOL}: $VOLSTAT, Total Size (bytes): $VOLCAPACITY $UNITtest, Free: $VOLFREESIZE $UNITtest2 (${VOLPCT}%)"
-        fi
 		
 	#Performance Data
-        if [ $VOL -gt 1 ]; then
-          PERFOUTPUT=$PERFOUTPUT" "
-        fi
         PERFOUTPUT=$PERFOUTPUT"FreeSize_Volume-$VOL=${VOLPCT}%;$strWarning;$strCritical;0;100"
 
         VOL=`expr $VOL + 1`
