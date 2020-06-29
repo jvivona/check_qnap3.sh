@@ -461,34 +461,21 @@ elif [ "$strpart" == "vol1status" ]; then
                 WARNING=1
         fi
 
-        if [ "$VOL" -lt "$VOLCOUNT" ]; then
-           ALLOUTPUT="${ALLOUTPUT}Volume #${VOL}: $VOLSTAT, Total Size (bytes): $VOLCAPACITY $UNITtest, Free: $VOLFREESIZE $UNITtest2 (${VOLPCT}%), "
-        else
            ALLOUTPUT="${ALLOUTPUT}Volume #${VOL}: $VOLSTAT, Total Size (bytes): $VOLCAPACITY $UNITtest, Free: $VOLFREESIZE $UNITtest2 (${VOLPCT}%)"
-        fi
+
 		
 	#Performance Data
-        if [ $VOL -gt 1 ]; then
-          PERFOUTPUT=$PERFOUTPUT" "
-        fi
         PERFOUTPUT=$PERFOUTPUT"FreeSize_Volume-$VOL=${VOLPCT}%;$strWarning;$strCritical;0;100"
 
-        VOL=`expr $VOL + 1`
+    echo $ALLOUTPUT"|"$PERFOUTPUT
 
-
-
-    	if [ "$Vol_Status" == "Ready" ]; then
-            	echo OK: $Vol_Status
-            	exit 0
-
-    	elif [ "$Vol_Status" == "Rebuilding..." ]; then
-            	echo "WARNING: "$Vol_Status
-            	exit 1
-
-    	else
-            	echo "CRITICAL: "$Vol_Status
-            	exit 2
-    	fi
+     if [ $CRITICAL -eq 1 ]; then
+        exit 2
+     elif [ $WARNING -eq 1 ]; then
+        exit 1
+     else
+        exit 0
+     fi
 
 # Volume 2 Status----------------------------------------------------------------------------------------------------------------------------------------
 elif [ "$strpart" == "vol2status" ]; then
@@ -567,20 +554,16 @@ elif [ "$strpart" == "vol2status" ]; then
         VOL=`expr $VOL + 1`
 
 
+    echo $ALLOUTPUT"|"$PERFOUTPUT
 
-    	if [ "$Vol_Status" == "Ready" ]; then
-            	echo OK: $Vol_Status
-            	exit 0
-
-    	elif [ "$Vol_Status" == "Rebuilding..." ]; then
-            	echo "WARNING: "$Vol_Status
-            	exit 1
-
-    	else
-            	echo "CRITICAL: "$Vol_Status
-            	exit 2
-    	fi
-
+     if [ $CRITICAL -eq 1 ]; then
+        exit 2
+     elif [ $WARNING -eq 1 ]; then
+        exit 1
+     else
+        exit 0
+     fi
+  
 
 # Volume 3 Status----------------------------------------------------------------------------------------------------------------------------------------
 elif [ "$strpart" == "vol3status" ]; then
